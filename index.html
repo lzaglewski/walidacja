@@ -12,149 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-    <script>
-
-        $(document).ready(function() {
-
-
-            var netto=$("#netto").val();
-            var vat=$("#vat").val();
-            var nettoOk=false;
-            var vatOk=false;
-
-
-            function bruttoCalc(){
-                if(vatOk==true && nettoOk==true)
-                {
-                     netto=parseFloat($("#netto").val());
-                     vat=parseFloat($("#vat").val());
-
-                    var wynik=netto+netto*(vat/100);
-
-                    $("#brutto").val(wynik);
-
-                }
-                else{
-                    $("#brutto").val("");
-                }
-            }
-
-
-
-            function addZeroes( num ) {
-                var value = Number(num);
-                var res = num.split(".");
-                if(num.indexOf('.') === -1) {
-                    value = value.toFixed(2);
-                    num = value.toString();
-                } else if (res[1].length < 3) {
-                    value = value.toFixed(2);
-                    num = value.toString();
-                }
-                return num
-            }
-
-
-            /////submit button
-
-            $("#submit").click(function(){
-                var name=$("#name").val();
-
-                if(name==="" || name.length>10) {
-                    $("#name").css('border-color', 'red');
-                }else{
-                    $("#name").css('border-color', 'green');
-                }
-
-            });
-
-
-            ////onchange
-
-            $("#name").change(function () {
-
-                var name=$("#name").val();
-
-                if(name==="" ||  name.length>10) {
-                    $("#name").css('border-color', 'red');
-                }else{
-                    $("#name").css('border-color', 'green');
-                }
-
-
-            });
-
-
-            $("#code").change(function () {
-
-                var code=$("#code").val();
-                var kod_wzorzec =  /^[a-zA-Z0-9]{2}-[a-zA-Z0-9]{2}$/;
-
-                if(kod_wzorzec.test(code)){
-                    $("#code").css('border-color', 'green');
-                }
-                else{
-                    $("#code").css('border-color', 'red');
-                }
-
-
-            });
-
-
-
-
-
-
-            $("#netto").change(function () {
-
-                netto=$("#netto").val();
-
-                if($.isNumeric(netto)){
-                    $("#netto").css('border-color', 'green');
-                    nettoOk=true;
-
-                    $("#netto").val(addZeroes(netto));
-                   bruttoCalc();
-
-                }
-                else{
-                    $("#netto").css('border-color', 'red');
-                    nettoOk=false;
-                    bruttoCalc();
-                }
-
-            });
-
-
-
-            $("#vat").change(function () {
-
-                vat=$("#vat").val();
-
-                if($.isNumeric(vat)){
-                    $("#vat").css('border-color', 'green');
-                    vatOk=true;
-
-                    bruttoCalc();
-
-
-                }
-                else{
-                    $("#vat").css('border-color', 'red');
-                    vatOk=false;
-                    bruttoCalc();
-                }
-
-
-            });
-
-            ////onchange
-        });
-
-
-
-
-    </script>
+    <script src="walidacja.js"></script>
 
 </head>
 
@@ -195,6 +53,9 @@
             <label for="vat">Vat:</label>
             <input type="number" class="form-control" id="vat">
         </div>
+        <div id="alertVat" class="alert alert-danger" style="display: none">
+            <strong>Błąd!</strong> Vat to cyfry.
+        </div>
 
         <div class="form-group">
             <label for="brutto">Cena brutto:</label>
@@ -217,24 +78,29 @@
         <div class="form-group" id="opc">
 
             <label class="checkbox-inline">
-                <input type="checkbox" value="">Option 1
+                <input type="checkbox" value="1">Option 1
             </label>
 
             <label class="checkbox-inline ">
-                <input type="checkbox" value="">Option 2
+                <input type="checkbox" value="2">Option 2
             </label>
 
             <label class="checkbox-inline">
-                <input type="checkbox" value="">Option 3
+                <input type="checkbox" value="3">Option 3
             </label>
 
             <label class="checkbox-inline">
-                <input type="checkbox" value="">Option 4
+                <input type="checkbox" value="4">Option 4
             </label>
 
             <label class="checkbox-inline">
-                <input type="checkbox" value="">Option 5
+                <input type="checkbox" value="5">Option 5
             </label>
+
+
+            <div id="alertOpcja" class="alert alert-danger" style="display: none">
+               Zaznacz co najmniej 2.
+            </div>
 
 
         </div>
