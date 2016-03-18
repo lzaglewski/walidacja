@@ -7,7 +7,10 @@
     <link rel="stylesheet" href="bootstrap-3.3.6-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="bootstrap-3.3.6-dist/css/bootstrap-theme.min.css">
     <script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+
     <script src="jquery.js"></script>
+
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -18,121 +21,155 @@
 
 <body>
 
+
+
 <div class="container">
 
-    <h2>Dodaj produkt</h2>
-    <form role="form" class="col-lg-5">
 
-        <div class="form-group " id="1">
-            <label for="name">Nazwa:</label>
-            <input type="text" class="form-control" id="name" placeholder="Wpisz nazwę" onchange="">
-           <!-- <span class="glyphicon glyphicon-alert form-control-feedback"></span>-->
-        </div>
-        <div id="alertName" class="alert alert-danger" style="display: none">
-            <strong>Błąd!</strong> Nazwa nie może być dłuższa niż 10 znaków .
-        </div>
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalForm">Dodaj Produkt</button>
 
-        <div class="form-group">
-            <label for="code">Kod towaru:</label>
-            <input type="text" class="form-control" id="code" placeholder="XX-XX">
-        </div>
-        <div id="alertCode" class="alert alert-danger" style="display: none">
-            <strong>Błąd!</strong> Kod musi być w formacie XX-XX.
-        </div>
+    <!-- Modal -->
+    <div id="modalForm" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">
 
 
-        <div class="form-group">
-            <label for="netto">Cena netto:</label>
-            <input type="number" class="form-control" id="netto">
-        </div>
-        <div id="alertNetto" class="alert alert-danger" style="display: none">
-            <strong>Błąd!</strong> Cena to cyfry.
-        </div>
-
-        <div class="form-group">
-            <label for="vat">Vat:</label>
-            <input type="number" class="form-control" id="vat">
-        </div>
-        <div id="alertVat" class="alert alert-danger" style="display: none">
-            <strong>Błąd!</strong> Vat to cyfry.
-        </div>
-
-        <div class="form-group">
-            <label for="brutto">Cena brutto:</label>
-            <input type="text" class="form-control" readonly="readonly" id="brutto">
-        </div>
 
 
-        <div class="form-group">
-            <label for="sel1">Kategoria:</label>
-            <select class="form-control" id="sel1">
-                <option>Kategoria 1</option>
-                <option>Kategoria 2</option>
-                <option>Kategoria 3</option>
-                <option>Kategoria 4</option>
-            </select>
-        </div>
+
+                    <form role="form" id="formAddProduct">
+
+                        <div class="form-group " id="1">
+                            <label for="name">Nazwa:</label>
+                            <input type="text" class="form-control" id="name" placeholder="Wpisz nazwę" onchange="">
+                            <!-- <span class="glyphicon glyphicon-alert form-control-feedback"></span>-->
+                        </div>
+                        <div id="alertName" class="alert alert-danger" style="display: none">
+                            <strong>Błąd!</strong> Nazwa nie może być dłuższa niż 10 znaków .
+                        </div>
+
+                        <div class="form-group">
+                            <label for="code">Kod towaru:</label>
+                            <input type="text" class="form-control" id="code" placeholder="XX-XX">
+                        </div>
+                        <div id="alertCode" class="alert alert-danger" style="display: none">
+                            <strong>Błąd!</strong> Kod musi być w formacie XX-XX.
+                        </div>
 
 
-        <label for="opc">Opcja</label>
-        <div class="form-group" id="opc">
+                        <div class="form-group">
+                            <label for="netto">Cena netto:</label>
+                            <input type="number" class="form-control" id="netto">
+                        </div>
+                        <div id="alertNetto" class="alert alert-danger" style="display: none">
+                            <strong>Błąd!</strong> Cena to cyfry.
+                        </div>
 
-            <label class="checkbox-inline">
-                <input type="checkbox" value="1">Option 1
-            </label>
+                        <div class="form-group">
+                            <label for="vat">Vat:</label>
+                            <input type="number" class="form-control" id="vat">
+                        </div>
+                        <div id="alertVat" class="alert alert-danger" style="display: none">
+                            <strong>Błąd!</strong> Vat to cyfry.
+                        </div>
 
-            <label class="checkbox-inline ">
-                <input type="checkbox" value="2">Option 2
-            </label>
-
-            <label class="checkbox-inline">
-                <input type="checkbox" value="3">Option 3
-            </label>
-
-            <label class="checkbox-inline">
-                <input type="checkbox" value="4">Option 4
-            </label>
-
-            <label class="checkbox-inline">
-                <input type="checkbox" value="5">Option 5
-            </label>
+                        <div class="form-group">
+                            <label for="brutto">Cena brutto:</label>
+                            <input type="text" class="form-control" readonly="readonly" id="brutto">
+                        </div>
 
 
-            <div id="alertOpcja" class="alert alert-danger" style="display: none">
-               Zaznacz co najmniej 2.
+                        <div class="form-group">
+                            <label for="sel1">Kategoria:</label>
+                            <select class="form-control" id="sel1">
+                                <option>Kategoria 1</option>
+                                <option>Kategoria 2</option>
+                                <option>Kategoria 3</option>
+                                <option>Kategoria 4</option>
+                            </select>
+                        </div>
+
+
+                        <label for="opc">Opcja</label>
+                        <div class="form-group" id="opc">
+
+                            <label class="checkbox-inline">
+                                <input type="checkbox" value="1">Option 1
+                            </label>
+
+                            <label class="checkbox-inline ">
+                                <input type="checkbox" value="2">Option 2
+                            </label>
+
+                            <label class="checkbox-inline">
+                                <input type="checkbox" value="3">Option 3
+                            </label>
+
+                            <label class="checkbox-inline">
+                                <input type="checkbox" value="4">Option 4
+                            </label>
+
+                            <label class="checkbox-inline">
+                                <input type="checkbox" value="5">Option 5
+                            </label>
+
+
+                            <div id="alertOpcja" class="alert alert-danger" style="display: none">
+                                Zaznacz co najmniej 2.
+                            </div>
+
+
+                        </div>
+
+
+                        <label for="rate">Ocena:</label>
+                        <div class="form-group" id="rate">
+                            <div class="radio">
+                                <label><input type="radio" name="optradio" value="1">1</label>
+                            </div>
+
+                            <div class="radio">
+                                <label><input type="radio" name="optradio" value="2">2</label>
+                            </div>
+
+                            <div class="radio">
+                                <label><input type="radio" name="optradio"value="3">3</label>
+                            </div>
+
+                            <div class="radio">
+                                <label><input type="radio" name="optradio"value="4">4</label>
+                            </div>
+
+                            <div class="radio">
+                                <label><input type="radio" name="optradio"value="5">5</label>
+
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn btn-primary" id="submit">Prześlij</button>
+
+                    </form>
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
 
-
         </div>
+    </div><!--modal-->
 
 
-        <label for="rate">Ocena:</label>
-        <div class="form-group" id="rate">
-            <div class="radio">
-                <label><input type="radio" name="optradio">1</label>
-            </div>
-
-            <div class="radio">
-                <label><input type="radio" name="optradio">2</label>
-            </div>
-
-            <div class="radio">
-                <label><input type="radio" name="optradio">3</label>
-            </div>
-
-            <div class="radio">
-                <label><input type="radio" name="optradio">4</label>
-            </div>
-
-            <div class="radio">
-                <label><input type="radio" name="optradio">5</label>
-
-            </div>
-        </div>
-
-        <button type="button" class="btn btn-primary" id="submit">Prześlij</button>
-
-    </form>
 
 </div>
 

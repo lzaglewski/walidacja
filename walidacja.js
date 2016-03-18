@@ -1,6 +1,10 @@
 /**
  * Created by Lukasz on 18.03.16.
  */
+
+
+var product=new Object();
+
 $(document).ready(function() {
 
 
@@ -8,6 +12,11 @@ $(document).ready(function() {
     var vat=$("#vat").val();
     var nettoOk=false;
     var vatOk=false;
+
+
+
+
+
 
 
     function bruttoCalc(){
@@ -20,9 +29,15 @@ $(document).ready(function() {
 
             $("#brutto").val(wynik);
 
+            ///ustawianie objektu produkt
+
+            product.brutto=wynik;
+
         }
         else{
             $("#brutto").val("");
+
+            product.brutto=undefined;
         }
     }
 
@@ -50,9 +65,14 @@ $(document).ready(function() {
         if(name=="" ||  name.length>10) {
             $("#name").css('border-color', 'red');
             $("#alertName").css('display','block');
+            product.name=undefined;
+
+
         }else{
             $("#name").css('border-color', 'green');
             $("#alertName").css('display','none');
+
+            product.name=name;
         }
         ///name
 
@@ -65,10 +85,14 @@ $(document).ready(function() {
         if(kod_wzorzec.test(code) && code.length>=5){
             $("#code").css('border-color', 'green');
             $("#alertCode").css('display','none')
+
+            product.code=code;
         }
         else{
             $("#code").css('border-color', 'red');
             $("#alertCode").css('display','block');
+
+            product.code=undefined;
         }
 
 
@@ -83,8 +107,11 @@ $(document).ready(function() {
             $("#netto").css('border-color', 'green');
             $("#alertNetto").css('display','none');
             nettoOk=true;
+           var zeroes=addZeroes(netto)
+            $("#netto").val(zeroes);
 
-            $("#netto").val(addZeroes(netto));
+            product.netto=zeroes;
+
             bruttoCalc();
 
         }
@@ -92,11 +119,16 @@ $(document).ready(function() {
             $("#netto").css('border-color', 'red');
             $("#alertNetto").css('display','block');
             nettoOk=false;
+            product.netto=undefined;
             bruttoCalc();
         }
 
         ///netto
 
+        ///
+
+
+        ///
 
         ///vat
 
@@ -107,6 +139,8 @@ $(document).ready(function() {
             $("#alertVat").css('display','none');
             vatOk=true;
 
+            product.vat=vat;
+
             bruttoCalc();
 
 
@@ -115,11 +149,18 @@ $(document).ready(function() {
             $("#vat").css('border-color', 'red');
             $("#alertVat").css('display','block');
             vatOk=false;
+
+            product.vat=undefined;
+
             bruttoCalc();
         }
         ///vat
+        ////select kategoria
 
-        /////checkboxes
+        var sel=$("#sel1").val();
+        product.category=sel;
+
+        /////checkboxes opcja
 
         var checkboxlist=[];
 
@@ -134,14 +175,67 @@ $(document).ready(function() {
         {
             $("#alertOpcja").css('display','none');
 
+            product.option=checkboxlist;
+
         }
         else{
 
             $("#alertOpcja").css('display','block');
 
+            product.option=undefined;
+
         }
 
         /////checkboxes
+
+
+        ///radio
+
+        $("input[type=radio]:checked").each(function() {
+
+
+            alert($(this).val() );
+
+        });
+
+
+        ////radio
+
+
+
+        /////sprawdza czy w obiekcie jest jakis undefined
+
+        var value=[];
+        var formOk=false;
+
+        for(var key in product) {
+
+
+            value.push(product[key]);
+            if(product[key]===undefined)
+            {
+                formOk=false;
+                break;
+
+            }
+            else{
+                formOk=true;
+            }
+        }
+
+        if(formOk===true){
+            alert("formularzok");
+            alert(value);
+
+            document.getElementById("formAddProduct").reset();
+            $("#modalForm").modal("hide");
+
+        }
+
+
+        /////sprawdza czy w obiekcie jest jakis undefined end
+
+
 
 
     });
@@ -188,11 +282,7 @@ $(document).ready(function() {
 
 
     });
-
-
-
-
-
+    
 
     $("#netto").change(function () {
 
@@ -252,7 +342,7 @@ $(document).ready(function() {
 
         });
 
-        if(checkboxlist.length>=3)
+        if(checkboxlist.length>=2)
         {
             $("#alertOpcja").css('display','none');
 
