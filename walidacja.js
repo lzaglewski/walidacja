@@ -4,6 +4,39 @@
 
 
 var product=new Object();
+var productTable=new Array();
+
+
+function createRow(){
+
+
+    var temp=jQuery.extend({}, product);
+    productTable.push(temp);
+
+    $("#tableBody").html(" ");
+    for(var i in productTable) {
+        $("#tableBody").append('<tr>'+'<th>' + productTable[i].name + '</th>'+
+            '<th>' + productTable[i].code + '</th>'+
+            '<th>' + productTable[i].netto + '</th>'+
+            '<th>' + productTable[i].vat + '</th>'+
+            '<th>' + productTable[i].brutto + '</th>'+
+            '<th>' + productTable[i].category + '</th>'+
+            '<th>' + productTable[i].option + '</th>'+
+            '<th>' + productTable[i].rate + '</th>'+
+
+
+            '</tr>');
+    }
+
+
+
+}
+
+
+
+
+
+
 
 $(document).ready(function() {
 
@@ -12,9 +45,6 @@ $(document).ready(function() {
     var vat=$("#vat").val();
     var nettoOk=false;
     var vatOk=false;
-
-
-
 
 
 
@@ -40,8 +70,6 @@ $(document).ready(function() {
             product.brutto=undefined;
         }
     }
-
-
 
     function addZeroes( num ) {
         var value = Number(num);
@@ -194,7 +222,7 @@ $(document).ready(function() {
         $("input[type=radio]:checked").each(function() {
 
 
-            alert($(this).val() );
+           product.rate=$(this).val();
 
         });
 
@@ -225,10 +253,11 @@ $(document).ready(function() {
 
         if(formOk===true){
             alert("formularzok");
-            alert(value);
 
+            createRow(product);
             document.getElementById("formAddProduct").reset();
             $("#modalForm").modal("hide");
+
 
         }
 
@@ -282,7 +311,7 @@ $(document).ready(function() {
 
 
     });
-    
+
 
     $("#netto").change(function () {
 
