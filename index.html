@@ -23,7 +23,6 @@
             var vatOk=false;
 
 
-
             function bruttoCalc(){
                 if(vatOk==true && nettoOk==true)
                 {
@@ -41,10 +40,27 @@
             }
 
 
+
+            function addZeroes( num ) {
+                var value = Number(num);
+                var res = num.split(".");
+                if(num.indexOf('.') === -1) {
+                    value = value.toFixed(2);
+                    num = value.toString();
+                } else if (res[1].length < 3) {
+                    value = value.toFixed(2);
+                    num = value.toString();
+                }
+                return num
+            }
+
+
+            /////submit button
+
             $("#submit").click(function(){
                 var name=$("#name").val();
 
-                if(name==="" || name.length<3 || name.length>15) {
+                if(name==="" || name.length>10) {
                     $("#name").css('border-color', 'red');
                 }else{
                     $("#name").css('border-color', 'green');
@@ -53,11 +69,13 @@
             });
 
 
+            ////onchange
+
             $("#name").change(function () {
 
                 var name=$("#name").val();
 
-                if(name==="" || name.length<3 || name.length>15) {
+                if(name==="" ||  name.length>10) {
                     $("#name").css('border-color', 'red');
                 }else{
                     $("#name").css('border-color', 'green');
@@ -83,16 +101,19 @@
             });
 
 
+
+
+
+
             $("#netto").change(function () {
 
                 netto=$("#netto").val();
 
-
-
-
                 if($.isNumeric(netto)){
                     $("#netto").css('border-color', 'green');
                     nettoOk=true;
+
+                    $("#netto").val(addZeroes(netto));
                    bruttoCalc();
 
                 }
@@ -126,6 +147,8 @@
 
 
             });
+
+            ////onchange
         });
 
 
@@ -141,21 +164,31 @@
 
     <h2>Dodaj produkt</h2>
     <form role="form" class="col-lg-5">
+
         <div class="form-group " id="1">
             <label for="name">Nazwa:</label>
             <input type="text" class="form-control" id="name" placeholder="Wpisz nazwę" onchange="">
            <!-- <span class="glyphicon glyphicon-alert form-control-feedback"></span>-->
+        </div>
+        <div id="alertName" class="alert alert-danger" style="display: none">
+            <strong>Błąd!</strong> Nazwa nie może być dłuższa niż 10 znaków .
         </div>
 
         <div class="form-group">
             <label for="code">Kod towaru:</label>
             <input type="text" class="form-control" id="code" placeholder="XX-XX">
         </div>
+        <div id="alertCode" class="alert alert-danger" style="display: none">
+            <strong>Błąd!</strong> Kod musi być w formacie XX-XX.
+        </div>
 
 
         <div class="form-group">
             <label for="netto">Cena netto:</label>
             <input type="number" class="form-control" id="netto">
+        </div>
+        <div id="alertNetto" class="alert alert-danger" style="display: none">
+            <strong>Błąd!</strong> Cena to cyfry.
         </div>
 
         <div class="form-group">
@@ -227,7 +260,7 @@
 
             <div class="radio">
                 <label><input type="radio" name="optradio">5</label>
-                
+
             </div>
         </div>
 
