@@ -4,40 +4,190 @@
 
 
 var product=new Object();
-var productTable=new Array();
+//var productTable=new Array();
+
+var productTable=[
+    {
+        name:'dupa',
+        code:'83-23',
+        netto:12,
+        vat:22,
+        brutto:12.64,
+        category:'kategoria 1',
+        option:'1',
+        rate:1
+
+    },
+
+    {
+        name:'zzzz',
+        code:'83-23',
+        netto:12,
+        vat:22,
+        brutto:77,
+        category:'kategoria 1',
+        option:'1',
+        rate:2
+
+    },
+    {
+        name:'gfgfgf',
+        code:'83-23',
+        netto:12,
+        vat:22,
+        brutto:98,
+        category:'kategoria 1',
+        option:'1',
+        rate:4
+
+    },
+
+    {
+        name:'dfdfd',
+        code:'83-23',
+        netto:12,
+        vat:22,
+        brutto:7798,
+        category:'kategoria 1',
+        option:'1',
+        rate:5
+
+    }
+
+
+];
+
 
 
 function createRow(){
 
-
     var temp=jQuery.extend({}, product);
     productTable.push(temp);
 
+    drawTable();
+}
+
+
+function drawTable(){
+
     $("#tableBody").html(" ");
+
     for(var i in productTable) {
-        $("#tableBody").append('<tr>'+'<th>' + productTable[i].name + '</th>'+
-            '<th>' + productTable[i].code + '</th>'+
-            '<th>' + productTable[i].netto + '</th>'+
-            '<th>' + productTable[i].vat + '</th>'+
-            '<th>' + productTable[i].brutto + '</th>'+
-            '<th>' + productTable[i].category + '</th>'+
-            '<th>' + productTable[i].option + '</th>'+
-            '<th>' + productTable[i].rate + '</th>'+
+        $("#tableBody").append('<tr>'+'<th scope="row">' + productTable[i].name + '</th>'+
+            '<td>' + productTable[i].code + '</td>'+
+            '<td>' + productTable[i].netto + '</td>'+
+            '<td>' + productTable[i].vat + '</td>'+
+            '<td>' + productTable[i].brutto + '</td>'+
+            '<td>' + productTable[i].category + '</td>'+
+            '<td>' + productTable[i].option + '</td>'+
+            '<td>' + productTable[i].rate + '</td>'+
 
 
             '</tr>');
     }
-
-
-
 }
 
+///buttony
+$(document).ready(function(){
+    ////buttony sort
+
+    drawTable();
+
+    $("#Nsort").click(function() {
+
+
+        if(document.getElementById("Nsort").value=="OFF") {
+            var byName = productTable.slice(0);
+            byName.sort(function (a, b) {
+                var x = a.name.toLowerCase();
+                var y = b.name.toLowerCase();
+                return x < y ? -1 : x > y ? 1 : 0;
+            });
+            productTable = byName;
+            drawTable();
+            document.getElementById("Nsort").value="ON";
+        } else if(document.getElementById("Nsort").value=="ON"){
+
+            var byName = productTable.slice(0);
+            byName.sort(function (a, b) {
+                var x = a.name.toLowerCase();
+                var y = b.name.toLowerCase();
+                return x < y ? 1 : x > y ? -1 : 0;
+            });
+            productTable = byName;
+            drawTable();
+            document.getElementById("Nsort").value="OFF";
+        }
+
+    });
+
+
+    $("#Bsort").click(function() {
+
+
+
+        if(document.getElementById("Bsort").value=="OFF") {
+            var byName = productTable.slice(0);
+            byName.sort(function (a, b) {
+                var x = a.brutto;
+                var y = b.brutto;
+                return x < y ? -1 : x > y ? 1 : 0;
+            });
+            productTable = byName;
+            drawTable();
+            document.getElementById("Bsort").value="ON";
+        } else if(document.getElementById("Bsort").value=="ON"){
+
+            var byName = productTable.slice(0);
+            byName.sort(function (a, b) {
+                var x = a.brutto;
+                var y = b.brutto;
+                return x < y ? 1 : x > y ? -1 : 0;
+            });
+            productTable = byName;
+            drawTable();
+            document.getElementById("Bsort").value="OFF";
+        }
+
+    });
+
+
+    $("#Rsort").click(function() {
 
 
 
 
+        if(document.getElementById("Rsort").value=="OFF") {
+            var byName = productTable.slice(0);
+            byName.sort(function (a, b) {
+                var x = a.rate;
+                var y = b.rate;
+                return x < y ? -1 : x > y ? 1 : 0;
+            });
+            productTable = byName;
+            drawTable();
+            document.getElementById("Rsort").value="ON";
+        } else if(document.getElementById("Rsort").value=="ON"){
+
+            var byName = productTable.slice(0);
+            byName.sort(function (a, b) {
+                var x = a.rate;
+                var y = b.rate;
+                return x < y ? 1 : x > y ? -1 : 0;
+            });
+            productTable = byName;
+            drawTable();
+            document.getElementById("Rsort").value="OFF";
+        }
+
+    });
+    /////
+
+});
 
 
+
+////walidacja
 $(document).ready(function() {
 
 
@@ -45,6 +195,7 @@ $(document).ready(function() {
     var vat=$("#vat").val();
     var nettoOk=false;
     var vatOk=false;
+
 
 
 
@@ -219,12 +370,18 @@ $(document).ready(function() {
 
         ///radio
 
+        product.rate=undefined;
+
+
         $("input[type=radio]:checked").each(function() {
 
 
            product.rate=$(this).val();
 
+
         });
+
+
 
 
         ////radio
@@ -255,7 +412,7 @@ $(document).ready(function() {
             alert("formularzok");
 
             createRow(product);
-            document.getElementById("formAddProduct").reset();
+           // document.getElementById("formAddProduct").reset();
             $("#modalForm").modal("hide");
 
 
@@ -268,7 +425,6 @@ $(document).ready(function() {
 
 
     });
-
 
 
 

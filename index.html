@@ -12,6 +12,8 @@
 
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
+
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
@@ -22,11 +24,13 @@
 <body>
 
 
-
 <div class="container">
 
+    <div>
 
     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalForm">Dodaj Produkt</button>
+
+    </div>
 
     <!-- Modal -->
     <div id="modalForm" class="modal fade" role="dialog">
@@ -44,7 +48,7 @@
 
 
 
-                    <form role="form" id="formAddProduct">
+                    <form role="form" id="formAddProduct" >
 
                         <div class="form-group " id="1">
                             <label for="name">Nazwa:</label>
@@ -151,6 +155,9 @@
                                 <label><input type="radio" name="optradio"value="5">5</label>
 
                             </div>
+                            <div id="alertOcena" class="alert alert-danger" style="display: none">
+                                Musisz ocenić
+                            </div>
                         </div>
 
                         <button type="button" class="btn btn-primary" id="submit">Prześlij</button>
@@ -170,17 +177,17 @@
     </div><!--modal-->
 
 
-    <table class="table">
+    <table id="mainTable" class="table table-hover table-striped">
         <thread>
             <tr>
-                <th>Nazwa</th>
+                <th>Nazwa <button id="Nsort" type="button" class="btn btn-primary btn-xs" value="OFF">sort</button></th>
                 <th>Kod Towaru</th>
                 <th>Cena Netto</th>
                 <th>Vat</th>
-                <th>Cena Brutto</th>
+                <th>Cena Brutto <button id="Bsort" type="button" class="btn btn-primary btn-xs" value="OFF">sort</button></th>
                 <th>Kategoria</th>
                 <th>Opcja</th>
-                <th>Ocena</th>
+                <th>Ocena <button id="Rsort" type="button" class="btn btn-primary btn-xs" value="OFF">sort</button></th>
             </tr>
 
             <tbody id="tableBody">
@@ -193,13 +200,9 @@
 
     </table>
 
-    <button type="button" onclick="draw()">Rysuj</button>
-
-
+  <!--  <button type="button" onclick="draw()">Rysuj</button>-->
+    
 </div>
-
-
-
 
 
 </body>
