@@ -60,6 +60,7 @@ var productTable=[
 
 
 function createRow(){
+    
 
     var temp=jQuery.extend({}, product);
     productTable.push(temp);
@@ -73,7 +74,10 @@ function drawTable(){
     $("#tableBody").html(" ");
 
     for(var i in productTable) {
-        $("#tableBody").append('<tr>'+'<th scope="row">' + productTable[i].name + '</th>'+
+        $("#tableBody").append(
+            '<tr scope="row">'+
+            '<td><input type="checkbox" id="'+i+'"></td>'+
+            '<th>' + productTable[i].name + '</th>'+
             '<td>' + productTable[i].code + '</td>'+
             '<td>' + productTable[i].netto + '</td>'+
             '<td>' + productTable[i].vat + '</td>'+
@@ -182,6 +186,30 @@ $(document).ready(function(){
 
     });
     /////
+
+
+    $("#delButton").click(function(){
+
+        var id=new Array()
+
+        $('input:checked ').each(function(){
+
+
+            id.push(parseInt(this.id));
+
+        });
+
+        var length=id.length;
+
+        for(var i=0;i<length;i++)
+        {
+            productTable.splice(id.pop(),1);
+
+        }
+
+        drawTable();
+
+    });
 
 });
 
@@ -513,7 +541,6 @@ $(document).ready(function() {
             bruttoCalc();
         }
 
-
     });
 
 
@@ -538,7 +565,6 @@ $(document).ready(function() {
 
         }
     });
-
 
 
     ////onchange
