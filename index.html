@@ -10,6 +10,7 @@
     <script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
 
     <script src="jquery.js"></script>
+    <script src="bootstrap-3.3.6-dist/js/jquery.cookie.js"></script>
 
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
@@ -22,6 +23,11 @@
 
 </head>
 
+<style>
+
+
+</style>
+
 <body>
 
 
@@ -29,8 +35,10 @@
 
     <div id="menu">
 
-    <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalForm">Dodaj Produkt</button>
-        <button type="button" class="btn btn-danger btn-lg" id="delButton">Usuń wiele</button>
+    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalForm">Dodaj Produkt</button>
+        <button type="button" class="btn btn-danger btn-sm" id="delButton">Usuń wiele</button>
+        <button type="button" class="btn btn-info btn-sm" id="koszButton">Dodaj do koszyka</button>
+       
 
     </div>
 
@@ -95,10 +103,10 @@
                         <div class="form-group">
                             <label for="sel1">Kategoria:</label>
                             <select class="form-control" id="sel1">
-                                <option>Kategoria 1</option>
-                                <option>Kategoria 2</option>
-                                <option>Kategoria 3</option>
-                                <option>Kategoria 4</option>
+                                <option>kategoria 1</option>
+                                <option>kategoria 2</option>
+                                <option>kategoria 3</option>
+                                <option>kategoria 4</option>
                             </select>
                         </div>
 
@@ -107,23 +115,23 @@
                         <div class="form-group" id="opc">
 
                             <label class="checkbox-inline">
-                                <input type="checkbox" value="1">Option 1
+                                <input id="c1" type="checkbox" value="1">Option 1
                             </label>
 
                             <label class="checkbox-inline ">
-                                <input type="checkbox" value="2">Option 2
+                                <input id="c2" type="checkbox" value="2">Option 2
                             </label>
 
                             <label class="checkbox-inline">
-                                <input type="checkbox" value="3">Option 3
+                                <input id="c3" type="checkbox" value="3">Option 3
                             </label>
 
                             <label class="checkbox-inline">
-                                <input type="checkbox" value="4">Option 4
+                                <input id="c4" type="checkbox" value="4">Option 4
                             </label>
 
                             <label class="checkbox-inline">
-                                <input type="checkbox" value="5">Option 5
+                                <input id="c5" type="checkbox" value="5">Option 5
                             </label>
 
 
@@ -180,6 +188,65 @@
 
 
 
+
+
+    <!-Modal KOSZYK->
+    <!-Modal KOSZYK->
+    <!-Modal KOSZYK->
+    <!-Modal KOSZYK->
+    <!-Modal KOSZYK->
+    <!-- Modal -->
+    <div id="modalKosz" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Dodaj produkt</h4>
+                </div>
+                <div class="modal-body">
+
+
+                    <div id="koszBody">
+
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Nazwa</th>
+                                <th>cena</th>
+                                <th>Sztuk</th>
+                            </tr>
+                            </thead>
+                            <tbody id="koszykTable">
+                          
+                            </tbody>
+                        </table>
+
+                    </div>
+
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div><!--modal-->
+    <!-Modal KOSZYK->
+    <!-Modal KOSZYK->
+    <!-Modal KOSZYK->
+    <!-Modal KOSZYK->
+
+
+
+
+
+
     <table id="mainTable" class="table table-hover table-striped">
         <thread>
             <tr>
@@ -192,6 +259,7 @@
                 <th>Kategoria</th>
                 <th>Opcja</th>
                 <th>Ocena <button id="Rsort" type="button" class="btn btn-primary btn-xs" value="OFF">sort</button></th>
+                <th>Usun</th>
                 <th>Edycja</th>
             </tr>
 
