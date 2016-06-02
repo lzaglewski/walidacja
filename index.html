@@ -33,11 +33,21 @@
 
 <div class="container">
 
-    <div id="menu">
+    <div id="menu" class="col-lg-8">
 
     <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalForm">Dodaj Produkt</button>
         <button type="button" class="btn btn-danger btn-sm" id="delButton">Usuń wiele</button>
         <button type="button" class="btn btn-info btn-sm" id="koszButton">Dodaj do koszyka</button>
+        <button type="button" class="btn btn-default btn-sm" id="KoszykButton">Koszyk</button>
+
+        <select class="" id="selKat">
+            <option>cena od najniższej</option>
+            <option>cena od najwyższej</option>
+            <option>ocena od najniższej</option>
+            <option>ocena od najwyższej</option>
+            <option>nazwa od A</option>
+            <option>nazwa od Z</option>
+        </select>
        
 
     </div>
@@ -222,6 +232,25 @@
                           
                             </tbody>
                         </table>
+
+
+                        <div class="form-group">
+                            <label for="sel2">Dostawa:</label>
+                            <select class="form-control" id="sel2">
+                                <option>Poczta Polska 12zl</option>
+                                <option>Kurier DPD 18zl</option>
+                                <option>Kurier UPS 19zl</option>
+                                <option>Odbior osobisty 0zl</option>
+                            </select>
+                        </div>
+
+                        <h2 id="koszykSuma"></h2>
+
+
+
+
+                        <button type="button" class="btn btn-primary" id="buy">Kup</button>
+
 
                     </div>
 

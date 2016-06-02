@@ -8,7 +8,7 @@ var product=new Object();
 //var productTable=new Array();
 
 var productTable=[];
-
+var kosz=new Object();
 function delRow(id){
 
     productTable.splice(id,1);
@@ -17,24 +17,24 @@ function delRow(id){
 }
 
 
-function setCookie()
+function setCookie(name,obj)
 {
 
-    var objToCokie= productTable;
+    var objToCokie=obj;
     var stringObj=JSON.stringify(objToCokie);
 
-    $.cookie('1',stringObj);
+    $.cookie(name,stringObj);
 
 }
 
 
 
-function ReadCookie() {
+function ReadCookie(name) {
 
-    if ($.cookie('1')) {
+    if ($.cookie(name)) {
 
 
-    var obj = JSON.parse($.cookie('1'));
+    var obj = JSON.parse($.cookie(name));
 
     productTable = obj;
     drawTable(productTable);
@@ -87,19 +87,86 @@ function createRow(){
 }
 
 
-function drawKosz(){
+function drawKosz(index){
+
+
 
     $("#koszykTable").html(" ");
 
-    for(var i in productTable) {
+
+    var brutto=0;
+
+    var dostawa= document.getElementById("sel2").value;
+    var dostawaKoszt=0;
+
+    switch (dostawa){
+        case "Poczta Polska 12zl":
+            dostawaKoszt=12;
+            break;
+        case "Kurier DPD 18zl":
+            dostawaKoszt=18;
+            break;
+        case "Kurier UPS 19zl":
+            dostawaKoszt=19;
+            break;
+        case "Odbior osobisty 0zl":
+            dostawaKoszt=0;
+            break;
+
+    }
+
+
+
+
+    for(var i=0;i<index.length;i++) {
+
+        brutto=brutto+productTable[index[i]].brutto;
+
         $("#koszykTable").append(
-            '<tr scope="row">'+
-            '<th>' + productTable[i].name + '</th>'+
-            '<td>' + productTable[i].brutto + '</td>'+
+            '<tr scope="row">' +
+            '<th>' + productTable[index[i]].name + '</th>' +
+            '<td>' + productTable[index[i]].brutto + '</td>' +
+            '<td><input type="number" value="1">'+
 
 
             '</tr>');
+
+
+
+
     }
+
+    $("#koszykSuma").html(" ");
+
+    $("#koszykSuma").append(
+
+        'Suma: '+(dostawaKoszt+brutto));
+
+    $('#modalKosz').modal();
+
+
+
+    $("#sel2").change(function(){
+        drawKosz(index);
+    });
+
+
+
+    kosz.index=index;
+    kosz.dostawa=dostawa;
+
+    setCookie("koszyk",kosz);
+
+
+    $("#buy").click(function(){
+
+
+        $.removeCookie('koszyk');
+        $('#modalKosz').modal('hide');
+
+        alert("Zakupiono pomyslnie towary");
+
+    });
 
 }
 function drawTable(productTable){
@@ -125,7 +192,7 @@ function drawTable(productTable){
             '</tr>');
     }
 
-    setCookie();
+    setCookie("1",productTable);
 }
 
 ///buttony
@@ -133,7 +200,146 @@ $(document).ready(function(){
     ////buttony sort
 
    // drawTable(productTable);
-    ReadCookie();
+    ReadCookie("1");
+
+
+
+    $("#KoszykButton").click(function(){
+
+        if ($.cookie("koszyk")) {
+
+            var obj = JSON.parse($.cookie("koszyk"));
+
+            kosz=obj;
+
+            drawKosz(kosz.index);
+        }
+
+    });
+
+
+    $("#selKat").change(function(){
+
+
+       var choice= document.getElementById("selKat").value;
+
+
+
+        switch (choice){
+            case "cena od najniższej":
+               ByPriceUp();
+
+                break;
+            case "cena od najwyższej":
+                ByPriceDown();
+                break;
+            case "ocena od najniższej":
+                    ByRateUp();
+
+                break;
+            case "ocena od najwyższej":
+                    ByRateDown();
+                break;
+            case "nazwa od A":
+                    ByNameA();
+                break;
+            case "nazwa od Z":
+                ByNameZ();
+                break;
+
+        }
+
+
+
+
+
+    });
+
+
+    function ByNameA(){
+        var byName = productTable.slice(0);
+        byName.sort(function (a, b) {
+            var x = a.name.toLowerCase();
+            var y = b.name.toLowerCase();
+            return x < y ? -1 : x > y ? 1 : 0;
+        });
+        productTable = byName;
+        drawTable(productTable);
+        document.getElementById("Nsort").value="ON";
+
+    }
+
+    function ByNameZ(){
+        var byName = productTable.slice(0);
+        byName.sort(function (a, b) {
+            var x = a.name.toLowerCase();
+            var y = b.name.toLowerCase();
+            return x < y ? 1 : x > y ? -1 : 0;
+        });
+        productTable = byName;
+        drawTable(productTable);
+        document.getElementById("Nsort").value="OFF";
+    }
+
+
+    function ByPriceUp(){
+
+        var byName = productTable.slice(0);
+        byName.sort(function (a, b) {
+            var x = a.brutto;
+            var y = b.brutto;
+            return x < y ? -1 : x > y ? 1 : 0;
+        });
+        productTable = byName;
+        drawTable(productTable);
+        document.getElementById("Bsort").value="ON";
+
+    }
+
+    function ByPriceDown(){
+
+        var byName = productTable.slice(0);
+        byName.sort(function (a, b) {
+            var x = a.brutto;
+            var y = b.brutto;
+            return x < y ? 1 : x > y ? -1 : 0;
+        });
+        productTable = byName;
+        drawTable(productTable);
+        document.getElementById("Bsort").value="OFF";
+
+    }
+
+
+    function ByRateUp(){
+
+        var byName = productTable.slice(0);
+        byName.sort(function (a, b) {
+            var x = a.rate;
+            var y = b.rate;
+            return x < y ? -1 : x > y ? 1 : 0;
+        });
+        productTable = byName;
+        drawTable(productTable);
+        document.getElementById("Rsort").value="ON";
+
+    }
+
+
+    function ByRateDown(){
+
+        var byName = productTable.slice(0);
+        byName.sort(function (a, b) {
+            var x = a.rate;
+            var y = b.rate;
+            return x < y ? 1 : x > y ? -1 : 0;
+        });
+        productTable = byName;
+        drawTable(productTable);
+        document.getElementById("Rsort").value="OFF";
+
+    }
+
 
 
 
@@ -141,26 +347,11 @@ $(document).ready(function(){
 
 
         if(document.getElementById("Nsort").value=="OFF") {
-            var byName = productTable.slice(0);
-            byName.sort(function (a, b) {
-                var x = a.name.toLowerCase();
-                var y = b.name.toLowerCase();
-                return x < y ? -1 : x > y ? 1 : 0;
-            });
-            productTable = byName;
-            drawTable(productTable);
-            document.getElementById("Nsort").value="ON";
-        } else if(document.getElementById("Nsort").value=="ON"){
+            ByNameA();
 
-            var byName = productTable.slice(0);
-            byName.sort(function (a, b) {
-                var x = a.name.toLowerCase();
-                var y = b.name.toLowerCase();
-                return x < y ? 1 : x > y ? -1 : 0;
-            });
-            productTable = byName;
-            drawTable(productTable);
-            document.getElementById("Nsort").value="OFF";
+        } else if(document.getElementById("Nsort").value=="ON"){
+            ByNameZ();
+
         }
 
     });
@@ -171,26 +362,12 @@ $(document).ready(function(){
 
 
         if(document.getElementById("Bsort").value=="OFF") {
-            var byName = productTable.slice(0);
-            byName.sort(function (a, b) {
-                var x = a.brutto;
-                var y = b.brutto;
-                return x < y ? -1 : x > y ? 1 : 0;
-            });
-            productTable = byName;
-            drawTable(productTable);
-            document.getElementById("Bsort").value="ON";
+            ByPriceUp();
+
         } else if(document.getElementById("Bsort").value=="ON"){
 
-            var byName = productTable.slice(0);
-            byName.sort(function (a, b) {
-                var x = a.brutto;
-                var y = b.brutto;
-                return x < y ? 1 : x > y ? -1 : 0;
-            });
-            productTable = byName;
-            drawTable(productTable);
-            document.getElementById("Bsort").value="OFF";
+            ByPriceDown();
+
         }
 
     });
@@ -202,26 +379,11 @@ $(document).ready(function(){
 
 
         if(document.getElementById("Rsort").value=="OFF") {
-            var byName = productTable.slice(0);
-            byName.sort(function (a, b) {
-                var x = a.rate;
-                var y = b.rate;
-                return x < y ? -1 : x > y ? 1 : 0;
-            });
-            productTable = byName;
-            drawTable(productTable);
-            document.getElementById("Rsort").value="ON";
+            ByRateUp();
+
         } else if(document.getElementById("Rsort").value=="ON"){
 
-            var byName = productTable.slice(0);
-            byName.sort(function (a, b) {
-                var x = a.rate;
-                var y = b.rate;
-                return x < y ? 1 : x > y ? -1 : 0;
-            });
-            productTable = byName;
-            drawTable(productTable);
-            document.getElementById("Rsort").value="OFF";
+           ByRateDown();
         }
 
     });
@@ -285,14 +447,17 @@ $(document).ready(function(){
         for(var i=0;i<length;i++)
         {
            // productTable.splice(id.pop(),1);
-            alert(id);
+
+
+        }
+
+        if(length>0)
+        {
+            drawKosz(id);
 
         }
 
 
-
-       drawKosz();
-        $('#modalKosz').modal();
 
     });
 
@@ -542,6 +707,17 @@ $(document).ready(function() {
     $("#name").change(function () {
 
         var name=$("#name").val();
+
+        for(var i in productTable) {
+
+           if(productTable[i].name===name)
+           {
+               alert("Nazwa zajeta");
+               $("#name").val("");
+           }
+
+
+        }
 
         if(name=="" ||  name.length>10) {
             $("#name").css('border-color', 'red');
